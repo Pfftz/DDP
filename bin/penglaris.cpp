@@ -118,8 +118,6 @@ _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======|_| """ |_|"""""
          << endl;
     SetConsoleTextAttribute(h, 7); // putih
     cout << " Version: alpha\n\n\n\n eres el mejor programador del mundo - Bang Messi\n\n\n\n";
-    cout << " Playing music..." << endl;
-    PlaySound(TEXT("music.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
     system("pause"); // command line for stopping the program
 }
 
@@ -353,6 +351,5 @@ int main()
         }
         }
     }
-
     return 0;
 }
