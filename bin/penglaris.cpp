@@ -36,6 +36,17 @@ double get_total(const map<string, int> &cart)
     return total;
 }
 
+void loading()
+{
+    cout << " Loading";
+    for (int i = 0; i < 3; i++)
+    {
+        Sleep(1000);
+        cout << ".";
+    }
+    cout << endl;
+}
+
 double calculate_discount(double total)
 {
     if (total >= 500000)
@@ -121,19 +132,20 @@ _|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======|_| """ |_|"""""
     system("pause"); // command line for stopping the program
 }
 
-void login()
+string login()
 {
     bool is_correct = false;
+    string username;
     while (!is_correct)
     {
         system("cls");
-        string user, password;
         cout << "  ---------------- " << endl;
         cout << " |     Log In     |\n";
         cout << "  ---------------- \n";
         cout << "\n Username : ";
-        getline(cin, user);
+        getline(cin, username);
         cout << " Password : ";
+        string password;
         getline(cin, password);
 
         if (password == "adalahbenar" || password == "nausicaa" || password == "ahok")
@@ -141,8 +153,9 @@ void login()
             system("cls");
             cout << "\n  ===============================\n";
             cout << " | Sukses Anda Berhasil Login !! |\n";
-            cout << "  ===============================\n";
+            cout << "  ===============================\n\n";
             is_correct = true;
+            system("pause");
         }
         else
         {
@@ -153,6 +166,7 @@ void login()
             system("pause");
         }
     }
+    return username;
 }
 
 void menu1()
@@ -165,6 +179,8 @@ void menu1()
     cout << "\tMasukan barang yang akan dibeli: ";
     cin >> jumlah;
 
+    bool itemFound = false;
+
     while (jumlah > 0)
     {
         cout << "\tMasukan nama barang: ";
@@ -173,6 +189,7 @@ void menu1()
 
         if (items.find(input) != items.end())
         {
+            itemFound = true;
             int quantity;
             cout << "\tMasukkan jumlah barang (stok: " << get<1>(items[input]) << "): ";
             cin >> quantity;
@@ -203,10 +220,15 @@ void menu1()
 
     double discount = calculate_discount(total);
 
-    cout << "\tTotal belanja: Rp." << total - discount << endl;
-    cout << "\tMasukkan jumlah uang yang dibayarkan: Rp.";
-    cin >> paid;
+    if (itemFound)
+    {
+        cout << "\tTotal belanja: Rp." << total - discount << endl;
+        cout << "\tMasukkan jumlah uang yang dibayarkan: Rp.";
+        cin >> paid;
+    }
     cout << "+============================================================+" << endl;
+
+    loading();
 
     print_receipt(total, discount, paid);
 
@@ -290,22 +312,52 @@ void menu5()
     system("cls");
 }
 
+void menu6()
+{
+    SetConsoleTextAttribute(h, 5);
+    cout << "\n\n";
+    for (int i = 0; i < 40; i++)
+    {
+        Sleep(100);
+        cout << "-";
+    }
+    cout << "\n Credit: " << endl;
+    cout << " 1. Abdulhadi Muntashir (3337230041)" << endl;
+    cout << " 2. Maulana Faizar Rasyadan (3337230072)" << endl;
+    cout << " 3. Usamah Abdul Aziz (3337230079)" << endl;
+    for (int i = 0; i < 40; i++)
+    {
+        Sleep(100);
+        cout << "-";
+    }
+    SetConsoleTextAttribute(h, 7);
+    cout << endl;
+    system("pause");
+    system("cls");
+}
+
 int main()
 {
     welcome();
-    login();
+    string user = login();
     system("cls");
     while (ulang)
     {
-        cout << " ===========================================================" << endl;
-        cout << " -----------------------------------------------------------" << endl;
-        cout << " ####----         Kasir Grosir Kelompok 5 DDP      ----####" << endl;
-        cout << "\n\tKasir sederhana" << endl;
+        cout << " ============================================================" << endl;
+        cout << " ------------------------------------------------------------" << endl;
+        cout << " ####----           Kasir Grosir Penglaris           ----####" << endl;
+        cout << " ------------------------------------------------------------" << endl;
+        cout << " ============================================================" << endl;
+        cout << " Pegawai: " << user << endl;
+        cout << " ------------------------------------------------------------" << endl;
+        cout << "\n\n";
+        cout << "\tMenu: \n";
         cout << "\t1. Pembayaran\n";
         cout << "\t2. Daftar Barang\n";
         cout << "\t3. Cek stock\n";
         cout << "\t4. Update stock\n";
         cout << "\t5. Hapus barang\n";
+        cout << "\t6. Credit\n";
         cout << "\t0. keluar\n";
         cout << "\tmasukan pilihan: ";
         cin >> pil;
@@ -342,6 +394,11 @@ int main()
         case 5:
         {
             menu5();
+            break;
+        }
+        case 6:
+        {
+            menu6();
             break;
         }
         default:
