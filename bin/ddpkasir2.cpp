@@ -119,7 +119,6 @@ void menu1()
             {
                 cart[input] += quantity;
                 get<1>(items[input]) -= quantity;
-                jumlah -= quantity;
             }
             else
             {
@@ -166,6 +165,23 @@ void menu2()
 
 void menu3()
 {
+    cout << " Masukkan nama barang yang akan dicek stoknya: ";
+    cin >> input;
+    if (items.find(input) != items.end())
+    {
+        cout << " Stok barang '" << input << "' adalah " << get<1>(items[input]) << " " << get<2>(items[input]) << endl;
+    }
+    else
+    {
+        cout << " Barang tidak ditemukan." << endl;
+    }
+    cout << endl;
+    system("pause");
+    system("cls");
+}
+
+void menu4()
+{
     cout << " Masukkan nama barang yang akan diupdate stoknya: ";
     cin >> input;
     if (items.find(input) != items.end())
@@ -185,7 +201,7 @@ void menu3()
     system("cls");
 }
 
-void menu4()
+void menu5()
 {
     cout << " Masukkan nama barang yang akan dihapus: ";
     cin >> input;
@@ -203,6 +219,8 @@ void menu4()
     system("cls");
 }
 
+
+
 int main()
 {
     while (ulang)
@@ -212,9 +230,10 @@ int main()
         cout << " ####----         Kasir Grosir Kelompok 5 DDP      ----####" << endl;
         cout << "\n\tKasir sederhana" << endl;
         cout << "\t1. Pembayaran\n";
-        cout << "\t2. Cek stock\n";
-        cout << "\t3. Update stock\n";
-        cout << "\t4. Hapus barang\n";
+        cout << "\t2. Daftar Barang\n";
+        cout << "\t3. Cek stock\n";
+        cout << "\t4. Update stock\n";
+        cout << "\t5. Hapus barang\n";
         cout << "\t0. keluar\n";
         cout << "\tmasukan pilihan: ";
         cin >> pil;
@@ -246,6 +265,11 @@ int main()
         case 4:
         {
             menu4();
+            break;
+        }
+        case 5:
+        {
+            menu5();
             break;
         }
         default:
