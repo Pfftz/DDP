@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <windows.h>
 #include <map>
 #include <tuple>
 
@@ -11,6 +12,7 @@ string input;
 long long int total_harga;
 bool ulang = true;
 int diskon = 0, pil, jumlah;
+HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 map<string, tuple<double, int, string>> items{
     {"beras", {15000, 20, "kg"}},
@@ -93,6 +95,68 @@ void print_receipt(double total, double discount, double paid)
     cout << endl;
 }
 
+void welcome()
+{
+    /*
+    R"()" is used to create a raw string literal
+    Raw string literal adalah sebuah tipe data yang sama dengan literal string,
+    namun raw string literal memungkinkan pengguna
+    untuk menyertakan karakter khusus dalam teks tanpa harus meng-escape-nya (menambahkan karakter khusus seperti backslash '\').
+    */
+    string opening = R"(
+   ___                    _                _                         ___                    __ _     _                       _            
+  / __|    ___    _ __   | |__    __ _    | |__    ___      o O O   | _ \   ___    _ _     / _` |   | |    __ _      _ _    (_)     ___   
+  \__ \   / -_)  | '  \  | '_ \  / _` |   | / /   / _ \    o        |  _/  / -_)  | ' \    \__, |   | |   / _` |    | '_|   | |    (_-<   
+  |___/   \___|  |_|_|_| |_.__/  \__,_|   |_\_\   \___/   TS__[O]  _|_|_   \___|  |_||_|   |___/   _|_|_  \__,_|   _|_|_   _|_|_   /__/_  
+_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======|_| """ |_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| 
+"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
+)";
+    // fontnya Alligator2
+    SetConsoleTextAttribute(h, 3); // biru
+    cout << endl
+         << opening << "\n\n\n"
+         << endl;
+    SetConsoleTextAttribute(h, 7); // putih
+    cout << " Version: alpha\n\n\n\n eres el mejor programador del mundo - Bang Messi\n\n\n\n";
+    cout << " Playing music..." << endl;
+    PlaySound(TEXT("music.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    system("pause"); // command line for stopping the program
+}
+
+void login()
+{
+    bool is_correct = false;
+    while (!is_correct)
+    {
+        system("cls");
+        string user, password;
+        cout << "  ---------------- " << endl;
+        cout << " |     Log In     |\n";
+        cout << "  ---------------- \n";
+        cout << "\n Username : ";
+        getline(cin, user);
+        cout << " Password : ";
+        getline(cin, password);
+
+        if (password == "adalahbenar" || password == "nausicaa" || password == "ahok")
+        {
+            system("cls");
+            cout << "\n  ===============================\n";
+            cout << " | Sukses Anda Berhasil Login !! |\n";
+            cout << "  ===============================\n";
+            is_correct = true;
+        }
+        else
+        {
+            system("cls");
+            cout << "\n  =============\n";
+            cout << " | Login Gagal |\n";
+            cout << "  =============\n\n";
+            system("pause");
+        }
+    }
+}
+
 void menu1()
 {
     int jumlah;
@@ -124,6 +188,7 @@ void menu1()
             {
                 cout << "\tStok tidak mencukupi!" << endl;
             }
+            cout << endl;
         }
         else
         {
@@ -153,11 +218,13 @@ void menu1()
 
 void menu2()
 {
+    cout << "\n\n -----------------------------------------------------------" << endl;
     cout << " Daftar barang:" << endl;
     for (const auto &item : items)
     {
         cout << "  - " << item.first << " (" << get<1>(item.second) << " " << get<2>(item.second) << ")" << endl;
     }
+    cout << " -----------------------------------------------------------" << endl;
     cout << endl;
     system("pause");
     system("cls");
@@ -165,6 +232,7 @@ void menu2()
 
 void menu3()
 {
+    cout << "\n\n -----------------------------------------------------------" << endl;
     cout << " Masukkan nama barang yang akan dicek stoknya: ";
     cin >> input;
     if (items.find(input) != items.end())
@@ -175,6 +243,7 @@ void menu3()
     {
         cout << " Barang tidak ditemukan." << endl;
     }
+    cout << " -----------------------------------------------------------" << endl;
     cout << endl;
     system("pause");
     system("cls");
@@ -182,6 +251,7 @@ void menu3()
 
 void menu4()
 {
+    cout << "\n\n -----------------------------------------------------------" << endl;
     cout << " Masukkan nama barang yang akan diupdate stoknya: ";
     cin >> input;
     if (items.find(input) != items.end())
@@ -196,6 +266,7 @@ void menu4()
     {
         cout << " Barang tidak ditemukan." << endl;
     }
+    cout << " -----------------------------------------------------------" << endl;
     cout << endl;
     system("pause");
     system("cls");
@@ -203,6 +274,7 @@ void menu4()
 
 void menu5()
 {
+    cout << "\n\n -----------------------------------------------------------" << endl;
     cout << " Masukkan nama barang yang akan dihapus: ";
     cin >> input;
     if (items.find(input) != items.end())
@@ -214,15 +286,17 @@ void menu5()
     {
         cout << " Barang tidak ditemukan." << endl;
     }
+    cout << " -----------------------------------------------------------" << endl;
     cout << endl;
     system("pause");
     system("cls");
 }
 
-
-
 int main()
 {
+    welcome();
+    login();
+    system("cls");
     while (ulang)
     {
         cout << " ===========================================================" << endl;
