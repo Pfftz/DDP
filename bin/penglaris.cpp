@@ -39,7 +39,6 @@ double get_total(const map<string, int> &cart)
 
 void loading()
 {
-    system("COLOR 0e");
     system("cls");
     printf("\e[?25l");
 
@@ -88,7 +87,7 @@ double calculate_discount(double total)
 
 void print_receipt(double total, double discount, double paid)
 {
-    cout << "\n\n =========================================================================" << endl;
+    cout << "\n\n ==========================================================================" << endl;
     cout << " --------------------------------------------------------------------------" << endl;
     cout << "        ####----         Struk Grosir Kelompok 5 DDP      ----####" << endl;
     cout << " --------------------------------------------------------------------------" << endl;
@@ -118,7 +117,6 @@ void print_receipt(double total, double discount, double paid)
     cout << " Total biaya       : Rp." << total - discount << endl;
     cout << " Tunai             : Rp." << paid << endl;
     cout << " Kembalian         : Rp." << paid - (total - discount) << endl;
-    cout << endl;
     cout << " --------------------------------------------------------------------------" << endl;
     cout << " ==========================================================================" << endl;
     cout << endl;
@@ -251,10 +249,10 @@ void menu1()
 
         cout << "+============================================================+" << endl;
 
-        Sleep(500);
-
+        Sleep(1000);
+        SetConsoleTextAttribute(h, 13);
         loading();
-
+        SetConsoleTextAttribute(h, 7);
         system("cls");
 
         print_receipt(total, discount, paid);
@@ -344,6 +342,7 @@ void menu6()
 {
     SetConsoleTextAttribute(h, 5);
     cout << "\n\n";
+    cout << " ";
     for (int i = 0; i < 40; i++)
     {
         Sleep(100);
@@ -353,13 +352,15 @@ void menu6()
     cout << " 1. Abdulhadi Muntashir (3337230041)" << endl;
     cout << " 2. Maulana Faizar Rasyadan (3337230072)" << endl;
     cout << " 3. Usamah Abdul Aziz (3337230079)" << endl;
+    cout << " ";
     for (int i = 0; i < 40; i++)
     {
         Sleep(100);
         cout << "-";
     }
     SetConsoleTextAttribute(h, 7);
-    cout << endl;
+    cout << "\n"
+         << endl;
     system("pause");
     system("cls");
 }
@@ -367,7 +368,9 @@ void menu6()
 int main()
 {
     welcome();
+    SetConsoleTextAttribute(h, 10);
     loading();
+    SetConsoleTextAttribute(h, 7);
     string user = login();
     system("cls");
     while (ulang)
