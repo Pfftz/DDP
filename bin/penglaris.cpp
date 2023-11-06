@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <map>
 #include <tuple>
+#include <stdio.h>
 
 using namespace std;
 
@@ -38,13 +39,31 @@ double get_total(const map<string, int> &cart)
 
 void loading()
 {
-    cout << " Loading";
-    for (int i = 0; i < 3; i++)
+    system("COLOR 0e");
+    system("cls");
+    printf("\e[?25l");
+
+    SetConsoleCP(437);
+    SetConsoleOutputCP(437);
+    int bar1 = 177, bar2 = 219;
+    cout << "\n\n\n\t\tLoading...";
+    cout << "\n\n\n\t\t";
+
+    for (int i = 0; i < 25; i++)
     {
-        Sleep(1000);
-        cout << ".";
+        cout << (char)bar1;
     }
-    cout << endl;
+    cout << "\r";
+    cout << "\t\t";
+    for (int i = 0; i < 25; i++)
+    {
+        cout << (char)bar2;
+        Sleep(150);
+    }
+
+    cout << "\n\t\t"
+         << (char)1 << "!";
+    system("pause");
 }
 
 double calculate_discount(double total)
@@ -69,10 +88,10 @@ double calculate_discount(double total)
 
 void print_receipt(double total, double discount, double paid)
 {
-    cout << "\n\n ===========================================================" << endl;
-    cout << " -----------------------------------------------------------" << endl;
-    cout << " ####----         Struk Grosir Kelompok 5 DDP      ----####" << endl;
-    cout << " -----------------------------------------------------------" << endl;
+    cout << "\n\n =========================================================================" << endl;
+    cout << " --------------------------------------------------------------------------" << endl;
+    cout << "        ####----         Struk Grosir Kelompok 5 DDP      ----####" << endl;
+    cout << " --------------------------------------------------------------------------" << endl;
     cout << " " << left << setw(20) << "Nama Barang"
          << setw(10) << "Jumlah"
          << setw(10) << "Satuan"
@@ -92,16 +111,16 @@ void print_receipt(double total, double discount, double paid)
              << "Rp. " << setw(17) << fixed << setprecision(2) << sub_total
              << endl;
     }
-    cout << " ===========================================================" << endl;
-    cout << " -----------------------------------------------------------" << endl;
+    cout << " ==========================================================================" << endl;
+    cout << " --------------------------------------------------------------------------" << endl;
     cout << " Total Pembelian   : Rp." << total << endl;
     cout << " Total diskon      : Rp." << discount << endl;
     cout << " Total biaya       : Rp." << total - discount << endl;
     cout << " Tunai             : Rp." << paid << endl;
     cout << " Kembalian         : Rp." << paid - (total - discount) << endl;
     cout << endl;
-    cout << " -----------------------------------------------------------" << endl;
-    cout << " ===========================================================" << endl;
+    cout << " --------------------------------------------------------------------------" << endl;
+    cout << " ==========================================================================" << endl;
     cout << endl;
     cout << endl;
 }
@@ -178,13 +197,13 @@ void menu1()
     cout << "+============================================================+" << endl;
     cout << "\tMasukan barang yang akan dibeli: ";
     cin >> jumlah;
+    cin.ignore(); // Ignore the newline character left by cin >> jumlah
 
     bool itemFound = false;
 
     while (jumlah > 0)
     {
         cout << "\tMasukan nama barang: ";
-        cin.ignore();
         getline(cin, input);
 
         if (items.find(input) != items.end())
@@ -193,6 +212,7 @@ void menu1()
             int quantity;
             cout << "\tMasukkan jumlah barang (stok: " << get<1>(items[input]) << "): ";
             cin >> quantity;
+            cin.ignore(); // Ignore the newline character left by cin >> quantity
 
             if (quantity <= get<1>(items[input]))
             {
@@ -201,36 +221,44 @@ void menu1()
             }
             else
             {
-                cout << "\tStok tidak mencukupi!" << endl;
+                cout << "\tStok tidak mencukupi!\n"
+                     << endl;
+                continue;
             }
             cout << endl;
         }
         else
         {
-            cout << "\tBarang tidak tersedia atau jumlah salah." << endl;
-            break;
+            cout << "\tBarang tidak tersedia atau jumlah salah.\n"
+                 << endl;
+            continue;
         }
         jumlah--;
     }
 
-    for (const auto &item : cart)
-    {
-        total += get<0>(items[item.first]) * item.second;
-    }
-
-    double discount = calculate_discount(total);
-
     if (itemFound)
     {
+        for (const auto &item : cart)
+        {
+            total += get<0>(items[item.first]) * item.second;
+        }
+
+        double discount = calculate_discount(total);
+
         cout << "\tTotal belanja: Rp." << total - discount << endl;
         cout << "\tMasukkan jumlah uang yang dibayarkan: Rp.";
         cin >> paid;
+
+        cout << "+============================================================+" << endl;
+
+        Sleep(500);
+
+        loading();
+
+        system("cls");
+
+        print_receipt(total, discount, paid);
     }
-    cout << "+============================================================+" << endl;
-
-    loading();
-
-    print_receipt(total, discount, paid);
 
     system("pause");
     system("cls");
@@ -339,6 +367,7 @@ void menu6()
 int main()
 {
     welcome();
+    loading();
     string user = login();
     system("cls");
     while (ulang)
