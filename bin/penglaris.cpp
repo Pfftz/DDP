@@ -195,7 +195,7 @@ void menu1()
     string input;
 
     cout << "+============================================================+" << endl;
-    cout << "\tMasukan barang yang akan dibeli: ";
+    cout << "\tMasukan jumlah barang yang akan dibeli: ";
     cin >> jumlah;
     cin.ignore(); // Ignore the newline character left by cin >> jumlah
 
@@ -251,7 +251,7 @@ void menu1()
 
         cout << "+============================================================+" << endl;
 
-        Sleep(1000);
+        system("pause");
         SetConsoleTextAttribute(h, 13);
         loading();
         SetConsoleTextAttribute(h, 7);
@@ -401,6 +401,14 @@ int main()
         case 0:
         {
             ulang = false;
+            SetConsoleTextAttribute(h, 5);
+            cout << "   ______    __          __        ______    " << endl;
+            cout << "  /\" _  \"\\  |\" \\        /\"\"\\      /    \" \\   " << endl;
+            cout << " (: ( \\___) ||  |      /    \\    // ____  \\  " << endl;
+            cout << "  \\/ \\      |:  |     /' /\\  \\  /  /    ) :) " << endl;
+            cout << "  //  \\ _   |.  |    //  __'  \\(: (____/ //  " << endl;
+            cout << " (:   _) \\  /\\  |\\  /   /  \\\\  \\        /   " << endl;
+            cout << "  \\_______)(__\\_|_)(___/    \\___)\"_____/    " << endl;
             break;
         }
         case 1:
