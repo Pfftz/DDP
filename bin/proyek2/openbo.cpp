@@ -93,23 +93,23 @@ public:
 
 class Admin
 {
-private:
+public:
     vector<Kelas> classList; // Add this line
     vector<Kelas> fasilitas;
 
-public:
     void addClass()
     {
-        string nama;
-        int kapasitas;
+        string className;
+        int classCapacity;
+
         cout << "Masukkan nama kelas: ";
         cin.ignore();
-        getline(cin, nama);
+        getline(cin, className);
+
         cout << "Masukkan kapasitas kelas: ";
-        cin >> kapasitas;
-        Kelas newClass(nama, kapasitas);
-        classList.push_back(newClass);
-        cout << "Kelas berhasil ditambahkan.\n";
+        cin >> classCapacity;
+
+        classList.push_back(Kelas(className, classCapacity));
     }
 
     void deleteClass()
@@ -275,6 +275,131 @@ void displayClassInfo(Kelas &kelas)
     kelas.displayBookings();
 }
 
+void menuAdmin(Admin &admin)
+{
+    bool isLooping = true;
+    int pilih;
+
+    while (isLooping)
+    {
+        cout << " Selamat datang di OpenBO\n";
+        cout << " 1. Tambah Kelas\n";
+        cout << " 2. Hapus Kelas\n";
+        cout << " 3. Ubah data Kelas\n";
+        cout << " 4. Tambah fasilitas Kelas\n";
+        cout << " 5. Hapus fasilitas Kelas\n";
+        cout << " 6. Hapus Bookingan\n";
+        cout << " 7. Lihat Daftar Kelas\n";
+        cout << " 8. Lihat Daftar Booking\n";
+        cout << " 0. Keluar\n";
+        cout << " Pilih: ";
+        cin >> pilih;
+        switch (pilih)
+        {
+        case 1:
+            admin.addClass();
+            break;
+        case 2:
+            admin.deleteClass();
+            break;
+        case 3:
+            admin.editClass();
+            break;
+        case 4:
+            admin.addFacility();
+            break;
+        case 5:
+            admin.deleteFacility();
+            break;
+        case 6:
+            admin.deleteBooking();
+            break;
+        case 7:
+            admin.displayClassInfo();
+            break;
+        case 8:
+            admin.displayBooking();
+            break;
+        case 0:
+            cout << "Program selesai.\n";
+            isLooping = false;
+            break;
+        default:
+            cout << "Pilihan tidak valid\n";
+        }
+    }
+}
+
+void menuUser(Admin &admin)
+{
+    int choice;
+    do
+    {
+        cout << "\nMenu:\n";
+        cout << "1. Lihat Daftar Kelas dan Ketersediaan\n";
+        cout << "2. Booking Kelas\n";
+        cout << "3. Lihat Daftar Booking\n";
+        cout << "0. Keluar\n";
+        cout << "Pilih: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            for (Kelas &kelas : admin.classList)
+            {
+                displayClassInfo(kelas);
+            }
+            break;
+        case 2:
+        {
+            int jamMulai, jamSelesai;
+            string nama;
+            cout << "Masukkan nama kelas yang ingin di booking: ";
+            cin.ignore();
+            getline(cin, nama);
+
+            Kelas *kelas = nullptr;
+            for (Kelas &k : admin.classList)
+            {
+                if (k.nama == nama)
+                {
+                    kelas = &k;
+                    break;
+                }
+            }
+
+            if (!kelas)
+            {
+                cout << "Kelas tidak ditemukan.\n";
+                break;
+            }
+
+            cout << "Masukkan jam mulai booking: ";
+            cin >> jamMulai;
+            cout << "Masukkan jam selesai booking: ";
+            cin >> jamSelesai;
+
+            kelas->bookClass(jamMulai, jamSelesai);
+            break;
+        }
+        case 3:
+            cout << "Daftar Booking:\n";
+            for (Kelas &kelas : admin.classList)
+            {
+                displayClassInfo(kelas);
+            }
+            break;
+        case 0:
+            cout << "Program selesai.\n";
+            break;
+        default:
+            cout << "Pilihan tidak valid.\n";
+        }
+
+    } while (choice != 0);
+}
+
 bool adminLogin()
 {
     string username, password;
@@ -315,127 +440,9 @@ bool userLogin()
     }
 }
 
-void menuAdmin()
-{
-    Admin jawir;
-    bool isLooping = true;
-    int pilih;
-
-    while (isLooping)
-    {
-        cout << " Selamat datang di OpenBO\n";
-        cout << " 1. Tambah Kelas\n";
-        cout << " 2. Hapus Kelas\n";
-        cout << " 3. Ubah data Kelas\n";
-        cout << " 4. Tambah fasilitas Kelas\n";
-        cout << " 5. Hapus fasilitas Kelas\n";
-        cout << " 6. Hapus Bookingan\n";
-        cout << " 7. Lihat Daftar Kelas\n";
-        cout << " 8. Lihat Daftar Booking\n";
-        cout << " 0. Keluar\n";
-        cout << " Pilih: ";
-        cin >> pilih;
-        switch (pilih)
-        {
-        case 1:
-            jawir.addClass();
-            break;
-        case 2:
-            jawir.deleteClass();
-            break;
-        case 3:
-            jawir.editClass();
-            break;
-        case 4:
-            jawir.addFacility();
-            break;
-        case 5:
-            jawir.deleteFacility();
-            break;
-        case 6:
-            jawir.deleteBooking();
-            break;
-        case 7:
-            jawir.displayClassInfo();
-            break;
-        case 8:
-            jawir.displayBooking();
-            break;
-        case 0:
-            cout << "Program selesai.\n";
-            isLooping = false;
-            break;
-        default:
-            cout << "Pilihan tidak valid\n";
-        }
-    }
-}
-
-void menuUser(Kelas &kelasA, Kelas &kelasB)
-{
-    int choice;
-    string klas; // Declare kelas outside the switch statement
-    do
-    {
-        cout << "\nMenu:\n";
-        cout << "1. Lihat Daftar Kelas dan Ketersediaan\n";
-        cout << "2. Booking Kelas\n";
-        cout << "3. Lihat Daftar Booking\n";
-        cout << "0. Keluar\n";
-        cout << "Pilih: ";
-        cin >> choice;
-
-        switch (choice)
-        {
-        case 1:
-            displayClassInfo(kelasA);
-            displayClassInfo(kelasB);
-            break;
-        case 2:
-            int jamMulai, jamSelesai;
-            cout << "Masukkan kelas yang ingin di booking: ";
-            cin.ignore();
-            getline(cin, klas);
-
-            if (klas != "A" && klas != "B")
-            {
-                cout << "Kelas tidak valid.\n";
-                break;
-            }
-
-            cout << "Masukkan jam mulai booking: ";
-            cin >> jamMulai;
-            cout << "Masukkan jam selesai booking: ";
-            cin >> jamSelesai;
-
-            if (klas == "A")
-            {
-                kelasA.bookClass(jamMulai, jamSelesai);
-            }
-            else
-            {
-                kelasB.bookClass(jamMulai, jamSelesai);
-            }
-            break;
-        case 3:
-            cout << "Daftar Booking:\n";
-            displayClassInfo(kelasA);
-            displayClassInfo(kelasB);
-            break;
-        case 0:
-            cout << "Program selesai.\n";
-            break;
-        default:
-            cout << "Pilihan tidak valid.\n";
-        }
-
-    } while (choice != 0);
-}
-
 int main()
 {
-    Kelas kelasA("A", 30);
-    Kelas kelasB("B", 25);
+    Admin admin;
     int pilih;
     bool isLooping = true;
     while (isLooping)
@@ -451,7 +458,7 @@ int main()
         case 1:
             if (adminLogin()) // Call the function here
             {
-                menuAdmin();
+                menuAdmin(admin);
             }
             else
             {
@@ -461,7 +468,7 @@ int main()
         case 2:
             if (userLogin()) // Call the function here
             {
-                menuUser(kelasA, kelasB);
+                menuUser(admin);
             }
             else
             {
