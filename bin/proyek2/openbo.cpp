@@ -137,16 +137,56 @@ bool userLogin()
     }
 }
 
-void menuAdmin(){
+void menuAdmin()
+{
+    bool isLooping = true;
     int pilih;
-    cout << " Selamat datang di OpenBO\n";
-    cout << " 1. Tambah Kelas\n";
-    cout << " 2. Hapus Kelas\n";
-    cout << " 3. Lihat Daftar Kelas\n";
-    cout << " 4. Lihat Daftar Booking\n";
-    cout << " 0. Keluar\n";
-    cout << " Pilih: ";
-    cin >> pilih;
+    while(isLooping){
+        cout << " Selamat datang di OpenBO\n";
+        cout << " 1. Tambah Kelas\n";
+        cout << " 2. Hapus Kelas\n";
+        cout << " 3. Ubah data Kelas\n";
+        cout << " 4. Tambah fasilitas Kelas\n";
+        cout << " 5. Hapus fasilitas Kelas\n";
+        cout << " 6. Hapus Bookingan\n";
+        cout << " 7. Lihat Daftar Kelas\n";
+        cout << " 8. Lihat Daftar Booking\n";
+        cout << " 0. Keluar\n";
+        cout << " Pilih: ";
+        cin >> pilih;
+        switch (pilih)
+        {
+        case 1:
+            // Add addClass function here
+            break;
+        case 2:
+            // Add deleteClass function here
+            break;
+        case 3:
+            // Add editClass function here
+            break;
+        case 4:
+            // Add addFacility function here
+            break;
+        case 5:
+            // Add deleteFacility function here
+            break;
+        case 6:
+            // Add deleteBooking function here
+            break;
+        case 7:
+            // Add displayClassInfo function here
+            break;
+        case 8:
+            // Add displayBooking function here
+            break;
+        case 0:
+            cout << "Program selesai.\n";
+            break;
+        default:
+            cout << "Pilihan tidak valid\n";
+        }
+    }
 }
 
 void menuUser(Kelas &kelasA, Kelas &kelasB)
