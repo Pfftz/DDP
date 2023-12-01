@@ -285,10 +285,12 @@ bool adminLogin()
 
     if (username == "admin" && password == "admin")
     {
+        cout << "Login berhasil.\n";
         return true;
     }
     else
     {
+        cout << "Login gagal.\n";
         return false;
     }
 }
@@ -372,7 +374,7 @@ void menuAdmin()
 void menuUser(Kelas &kelasA, Kelas &kelasB)
 {
     int choice;
-    string ruangan; // Declare kelas outside the switch statement
+    string klas; // Declare kelas outside the switch statement
     do
     {
         cout << "\nMenu:\n";
@@ -393,9 +395,9 @@ void menuUser(Kelas &kelasA, Kelas &kelasB)
             int jamMulai, jamSelesai;
             cout << "Masukkan kelas yang ingin di booking: ";
             cin.ignore();
-            getline(cin, ruangan);
+            getline(cin, klas);
 
-            if (ruangan != "A" && ruangan != "B")
+            if (klas != "A" && klas != "B")
             {
                 cout << "Kelas tidak valid.\n";
                 break;
@@ -406,7 +408,7 @@ void menuUser(Kelas &kelasA, Kelas &kelasB)
             cout << "Masukkan jam selesai booking: ";
             cin >> jamSelesai;
 
-            if (ruangan == "A")
+            if (klas == "A")
             {
                 kelasA.bookClass(jamMulai, jamSelesai);
             }
@@ -441,6 +443,7 @@ int main()
         cout << " Selamat datang di OpenBO\n";
         cout << " 1. Login Admin\n";
         cout << " 2. Login User\n";
+        cout << " 0. Keluar\n";
         cout << " Pilih: ";
         cin >> pilih;
         switch (pilih)
@@ -464,6 +467,10 @@ int main()
             {
                 cout << " Anda tidak bisa mengakses menu user\n";
             }
+            break;
+        case 0:
+            cout << " Program selesai\n";
+            isLooping = false;
             break;
         default:
             cout << " Pilihan tidak valid\n";
