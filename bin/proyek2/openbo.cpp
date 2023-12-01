@@ -74,6 +74,15 @@ public:
     }
 };
 
+void displayClassInfo(Kelas &kelas)
+{
+    kelas.displayAvailability();
+    cout << "Daftar Booking:\n";
+    kelas.displayBookings();
+}
+
+
+
 int main() {
     Kelas kelasA("A", 30);
     Kelas kelasB("B", 25);
@@ -91,11 +100,8 @@ int main() {
 
         switch (choice) {
             case 1:
-                kelasA.displayAvailability();
-                kelasB.displayAvailability();
-                cout << "Daftar Booking:\n";
-                kelasA.displayBookings();
-                kelasB.displayBookings();
+                displayClassInfo(kelasA);
+                displayClassInfo(kelasB);
                 break;
             case 2:
                 int jamMulai, jamSelesai;
@@ -120,9 +126,9 @@ int main() {
                 }
                 break;
             case 3:
-			    cout << "Daftar Booking:\n";
-                kelasA.displayBookings();
-                kelasB.displayBookings();
+                cout << "Daftar Booking:\n";
+                displayClassInfo(kelasA);
+                displayClassInfo(kelasB);
                 break;
             case 0:
                 cout << "Program selesai.\n";
