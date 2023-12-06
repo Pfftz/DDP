@@ -58,6 +58,12 @@ double get_total(const map<string, int> &pesanan)
     return total;
 }
 
+auto to_lowercase = [](string &input)
+{
+    for (auto &c : input)
+        c = tolower(c);
+};
+
 void kurangi_stok_bahan_baku(const map<string, int> &pesanan)
 {
     for (const auto &item : pesanan)
@@ -69,19 +75,17 @@ void kurangi_stok_bahan_baku(const map<string, int> &pesanan)
         for (const auto &bahan : bahan_menu)
         {
             string nama_bahan = bahan.first;
+            to_lowercase(nama_bahan); // Convert to lowercase
             int jumlah_bahan_dibutuhkan = bahan.second * jumlah_pesanan;
 
-            bahan_baku_stok[nama_bahan] -= jumlah_bahan_dibutuhkan;
+            if (bahan_baku_stok.find(nama_bahan) != bahan_baku_stok.end()) // Check if the ingredient exists
+            {
+                bahan_baku_stok[nama_bahan] -= jumlah_bahan_dibutuhkan;
+            }
         }
     }
     cout << endl;
 }
-
-auto to_lowercase = [](string &input)
-{
-    for (auto &c : input)
-        c = tolower(c);
-};
 
 void menu1()
 {
@@ -159,6 +163,7 @@ void menu3()
     {
         cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
     }
+    cout << endl;
     cout << "-----------------------------------------------------------" << endl;
     cout << "===========================================================" << endl;
     cout << endl;
@@ -243,6 +248,17 @@ void menu7()
             cin.ignore();
 
             bahan_menu[nama_bahan] = jumlah_bahan_dibutuhkan;
+
+            // Check if the ingredient already exists in the bahan_baku_stok map
+            if (bahan_baku_stok.find(nama_bahan) == bahan_baku_stok.end())
+            {
+                // If the ingredient doesn't exist, add it to the map and initialize its stock to a default value
+                int stok_bahan;
+                cout << "\tMasukkan stok bahan baku '" << nama_bahan << "': ";
+                cin >> stok_bahan;
+                cin.ignore();
+                bahan_baku_stok[nama_bahan] = stok_bahan;
+            }
         }
 
         menu[input] = {harga, bahan_menu};
