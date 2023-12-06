@@ -9,12 +9,12 @@
 using namespace std;
 
 map<string, int> bahan_baku_stok{
-    {"Ayam", 50},
-    {"Sayur", 100},
-    {"Bumbu", 50},
-    {"Tepung", 50},
-    {"Nasi", 100},
-    {"Telur", 50}};
+    {"ayam", 50},
+    {"sayur", 100},
+    {"bumbu", 50},
+    {"tepung", 50},
+    {"nasi", 100},
+    {"telur", 50}};
 
 map<string, tuple<double, map<string, int>>> menu{
     {"nasi goreng", {25000, {{"Nasi", 1}, {"Ayam", 1}, {"Telur", 1}}}},
@@ -42,6 +42,9 @@ void tampilkan_daftar_menu()
 
         cout << "\t" << nama_menu << " - Rp" << harga_menu << endl;
     }
+    cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
     cout << endl;
 }
 
@@ -143,7 +146,10 @@ void menu1()
     kurangi_stok_bahan_baku(pesanan);
 
     cout << "\tPesanan berhasil diproses!" << endl;
-    cout << "+---------------------------------------------------------+" << endl;
+    cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
+    cout << endl;
 }
 
 void menu3()
@@ -236,16 +242,6 @@ void menu7()
             cin >> jumlah_bahan_dibutuhkan;
             cin.ignore();
 
-            // If the ingredient doesn't exist in the map, add it
-            if (bahan_baku_stok.find(nama_bahan) == bahan_baku_stok.end())
-            {
-                bahan_baku_stok[nama_bahan] = jumlah_bahan_dibutuhkan;
-            }
-            else
-            {
-                bahan_baku_stok[nama_bahan] += jumlah_bahan_dibutuhkan;
-            }
-
             bahan_menu[nama_bahan] = jumlah_bahan_dibutuhkan;
         }
 
@@ -332,7 +328,7 @@ int main()
         cout << "\t7. Tambah Menu\n";
         cout << "\t8. Hapus Menu\n";
         cout << "\t9. Credit\n";
-        cout << "\t0. Keluar\n";
+        cout << "\t0. Keluar\n\n";
         cout << "===========================================================" << endl;
         cout << "-----------------------------------------------------------" << endl;
         cout << endl;
