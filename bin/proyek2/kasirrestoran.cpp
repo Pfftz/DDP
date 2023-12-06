@@ -174,16 +174,17 @@ void menu1()
 
 void menu3()
 {
-    cout << "\tStok bahan baku saat ini:" << endl;
+    cout << "\n\tStok bahan baku saat ini:" << endl;
     for (const auto &bahan : bahan_baku_stok)
     {
         cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
     }
+    cout << endl;
 }
 
 void menu4()
 {
-    cout << "\tPesanan saat ini:" << endl;
+    cout << "\n\tPesanan saat ini:" << endl;
     for (const auto &item : pesanan)
     {
         cout << "\t" << item.first << " - " << item.second << " porsi" << endl;
@@ -193,13 +194,13 @@ void menu4()
 
 void menu5()
 {
-    cout << "\tTotal pendapatan saat ini: Rp." << total_harga << endl;
+    cout << "\n\tTotal pendapatan saat ini: Rp." << total_harga << endl;
     cout << endl;
 }
 
 void menu6()
 {
-    cout << "\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
+    cout << "\n\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
     cin >> input;
     if (bahan_baku_stok.find(input) != bahan_baku_stok.end())
     {
@@ -213,11 +214,12 @@ void menu6()
     {
         cout << "\tBahan baku tidak ditemukan." << endl;
     }
+    cout << endl;
 }
 
 void menu7()
 {
-    cout << "\tMasukkan nama menu yang akan ditambahkan: ";
+    cout << "\n\tMasukkan nama menu yang akan ditambahkan: ";
     cin.ignore();
     getline(cin, input);
     // Convert input to uppercase
@@ -255,11 +257,12 @@ void menu7()
         menu[input] = {harga, bahan_menu};
         cout << "\tMenu '" << input << "' berhasil ditambahkan." << endl;
     }
+    cout << endl;
 }
 
 void menu8()
 {
-    cout << "\tMasukkan nama menu yang akan dihapus: ";
+    cout << "\n\tMasukkan nama menu yang akan dihapus: ";
     cin.ignore();
     getline(cin, input);
     // Convert input to uppercase
@@ -275,6 +278,7 @@ void menu8()
     {
         cout << "\tMenu tidak ditemukan." << endl;
     }
+    cout << endl;
 }
 
 void menu9()
@@ -310,9 +314,10 @@ void menu9()
 int main()
 {
     welcome();
+    system("cls");
     do
     {
-        cout << "===========================================================" << endl;
+        cout << "\n===========================================================" << endl;
         cout << "-----------------------------------------------------------" << endl;
         cout << "####----        Kasir Restoran Kelompok 5 DDP      ----####" << endl;
         cout << "\n\tKasir restoran" << endl;
@@ -326,10 +331,14 @@ int main()
         cout << "\t8. Hapus Menu\n";
         cout << "\t9. Credit\n";
         cout << "\t0. Keluar\n";
-        cout << "-----------------------------------------------------------" << endl;
         cout << "===========================================================" << endl;
+        cout << "-----------------------------------------------------------" << endl;
+        cout << endl;
         cout << "\tMasukkan pilihan: ";
         cin >> pil;
+        cout << endl;
+        cout << "-----------------------------------------------------------" << endl;
+        cout << "===========================================================" << endl;
 
         switch (pil)
         {
