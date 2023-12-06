@@ -25,3 +25,34 @@
 //                                                                 I8                                                         
 //                                                                 I8                                                         
 // )";
+
+// void welcome()
+// {
+//     /*
+//     R"()" is used to create a raw string literal
+//     Raw string literal adalah sebuah tipe data yang sama dengan literal string,
+//     namun raw string literal memungkinkan pengguna
+//     untuk menyertakan karakter khusus dalam teks tanpa harus meng-escape-nya (menambahkan karakter khusus seperti backslash '\').
+//     */
+//     string opening = R"(
+                                                                                                        
+//                                                                 ,,                                      
+// `7MMF'  `7MMF'                           `7MM"""YMM             db                                      
+//   MM      MM                               MM    `7                                                     
+//   MM      MM  .gP"Ya `7M'   `MF' ,6"Yb.    MM   d   `7MMpdMAo.`7MM  ,p6"bo `7MM  `7MM  `7Mb,od8 .gP"Ya  
+//   MMmmmmmmMM ,M'   Yb  `VA ,V'  8)   MM    MMmmMM     MM   `Wb  MM 6M'  OO   MM    MM    MM' "',M'   Yb 
+//   MM      MM 8M""""""    XMX     ,pm9MM    MM   Y  ,  MM    M8  MM 8M        MM    MM    MM    8M"""""" 
+//   MM      MM YM.    ,  ,V' VA.  8M   MM    MM     ,M  MM   ,AP  MM YM.    ,  MM    MM    MM    YM.    , 
+// .JMML.  .JMML.`Mbmmd'.AM.   .MA.`Moo9^Yo..JMMmmmmMMM  MMbmmd' .JMML.YMbmd'   `Mbod"YML..JMML.   `Mbmmd' 
+//                                                       MM                                                
+//                                                     .JMML.                                              
+// )";
+//     // fontnya NV Script
+//     SetConsoleTextAttribute(h, 4); // merah
+//     cout << endl
+//          << opening << "\n\n\n"
+//          << endl;
+//     SetConsoleTextAttribute(h, 7); // putih
+//     cout << " Version: alpha\n\n\n\n eres el mejor programador del mundo - Bang Messi\n\n\n\n";
+//     system("pause"); // command line for stopping the program
+// }

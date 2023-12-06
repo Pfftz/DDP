@@ -40,7 +40,7 @@ void tampilkan_daftar_menu()
         const string &nama_menu = item.first;
         const double harga_menu = std::get<0>(item.second);
 
-        cout << "\t" << nama_menu << " - Rp." << harga_menu << endl;
+        cout << "\t" << nama_menu << " - Rp" << harga_menu << endl;
     }
     cout << endl;
 }
@@ -74,36 +74,11 @@ void kurangi_stok_bahan_baku(const map<string, int> &pesanan)
     cout << endl;
 }
 
-void welcome()
+auto to_lowercase = [](string &input)
 {
-    /*
-    R"()" is used to create a raw string literal
-    Raw string literal adalah sebuah tipe data yang sama dengan literal string,
-    namun raw string literal memungkinkan pengguna
-    untuk menyertakan karakter khusus dalam teks tanpa harus meng-escape-nya (menambahkan karakter khusus seperti backslash '\').
-    */
-    string opening = R"(
-                                                                                                        
-                                                                ,,                                      
-`7MMF'  `7MMF'                           `7MM"""YMM             db                                      
-  MM      MM                               MM    `7                                                     
-  MM      MM  .gP"Ya `7M'   `MF' ,6"Yb.    MM   d   `7MMpdMAo.`7MM  ,p6"bo `7MM  `7MM  `7Mb,od8 .gP"Ya  
-  MMmmmmmmMM ,M'   Yb  `VA ,V'  8)   MM    MMmmMM     MM   `Wb  MM 6M'  OO   MM    MM    MM' "',M'   Yb 
-  MM      MM 8M""""""    XMX     ,pm9MM    MM   Y  ,  MM    M8  MM 8M        MM    MM    MM    8M"""""" 
-  MM      MM YM.    ,  ,V' VA.  8M   MM    MM     ,M  MM   ,AP  MM YM.    ,  MM    MM    MM    YM.    , 
-.JMML.  .JMML.`Mbmmd'.AM.   .MA.`Moo9^Yo..JMMmmmmMMM  MMbmmd' .JMML.YMbmd'   `Mbod"YML..JMML.   `Mbmmd' 
-                                                      MM                                                
-                                                    .JMML.                                              
-)";
-    // fontnya NV Script
-    SetConsoleTextAttribute(h, 4); // merah
-    cout << endl
-         << opening << "\n\n\n"
-         << endl;
-    SetConsoleTextAttribute(h, 7); // putih
-    cout << " Version: alpha\n\n\n\n eres el mejor programador del mundo - Bang Messi\n\n\n\n";
-    system("pause"); // command line for stopping the program
-}
+    for (auto &c : input)
+        c = tolower(c);
+};
 
 void menu1()
 {
@@ -115,9 +90,8 @@ void menu1()
         cout << "\tPilih menu yang ingin dipesan: ";
         cin.ignore();
         getline(cin, input);
-        // Convert input to uppercase
-        for (auto &c : input)
-            c = tolower(c);
+        // Pass input to the to_lowercase function
+        to_lowercase(input);
 
         if (menu.find(input) != menu.end())
         {
@@ -155,16 +129,16 @@ void menu1()
     }
     long long int harga_bayar = total_harga - diskon;
 
-    cout << "\tTotal belanja: Rp." << total_harga << endl;
-    cout << "\tTotal diskon: Rp." << diskon << endl;
-    cout << "\tTotal yang harus dibayarkan: Rp." << harga_bayar << endl;
+    cout << "\tTotal belanja: Rp" << total_harga << endl;
+    cout << "\tTotal diskon: Rp" << diskon << endl;
+    cout << "\tTotal yang harus dibayarkan: Rp" << harga_bayar << endl;
     cout << endl;
 
     long long int uang_bayar;
-    cout << "\tMasukan jumlah uang yang dibayarkan: Rp.";
+    cout << "\tMasukan jumlah uang yang dibayarkan: Rp";
     cin >> uang_bayar;
     long long int kembalian = uang_bayar - harga_bayar;
-    cout << "\tKembalianmu adalah: Rp." << kembalian << endl;
+    cout << "\tKembalianmu adalah: Rp" << kembalian << endl;
 
     kurangi_stok_bahan_baku(pesanan);
 
@@ -179,6 +153,8 @@ void menu3()
     {
         cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
     }
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
     cout << endl;
 }
 
@@ -189,12 +165,19 @@ void menu4()
     {
         cout << "\t" << item.first << " - " << item.second << " porsi" << endl;
     }
+    cout << "\n\tDengan Total harga: Rp" << total_harga << endl;
+    cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
     cout << endl;
 }
 
 void menu5()
 {
-    cout << "\n\tTotal pendapatan saat ini: Rp." << total_harga << endl;
+    cout << "\n\tTotal pendapatan saat ini: Rp" << total_harga << endl;
+    cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
     cout << endl;
 }
 
@@ -214,6 +197,8 @@ void menu6()
     {
         cout << "\tBahan baku tidak ditemukan." << endl;
     }
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
     cout << endl;
 }
 
@@ -222,9 +207,6 @@ void menu7()
     cout << "\n\tMasukkan nama menu yang akan ditambahkan: ";
     cin.ignore();
     getline(cin, input);
-    // Convert input to uppercase
-    for (auto &c : input)
-        c = tolower(c);
 
     if (menu.find(input) != menu.end())
     {
@@ -233,12 +215,14 @@ void menu7()
     else
     {
         double harga;
-        cout << "\tMasukkan harga menu: ";
+        cout << "\tMasukkan harga menu: Rp";
         cin >> harga;
+        cin.ignore();
 
         int jumlah_bahan;
-        cout << "\tMasukkan jumlah bahan baku yang dibutuhkan: ";
+        cout << "\tBerapa banyak bahan baku yang dibutuhkan: ";
         cin >> jumlah_bahan;
+        cin.ignore();
 
         map<string, int> bahan_menu;
         for (int i = 0; i < jumlah_bahan; i++)
@@ -247,9 +231,20 @@ void menu7()
             int jumlah_bahan_dibutuhkan;
 
             cout << "\tMasukkan nama bahan baku: ";
-            cin >> nama_bahan;
-            cout << "\tMasukkan jumlah bahan baku yang dibutuhkan: ";
+            getline(cin, nama_bahan);
+            cout << "\tMasukkan jumlah bahan   : ";
             cin >> jumlah_bahan_dibutuhkan;
+            cin.ignore();
+
+            // If the ingredient doesn't exist in the map, add it
+            if (bahan_baku_stok.find(nama_bahan) == bahan_baku_stok.end())
+            {
+                bahan_baku_stok[nama_bahan] = jumlah_bahan_dibutuhkan;
+            }
+            else
+            {
+                bahan_baku_stok[nama_bahan] += jumlah_bahan_dibutuhkan;
+            }
 
             bahan_menu[nama_bahan] = jumlah_bahan_dibutuhkan;
         }
@@ -258,6 +253,9 @@ void menu7()
         cout << "\tMenu '" << input << "' berhasil ditambahkan." << endl;
     }
     cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
+    cout << endl;
 }
 
 void menu8()
@@ -265,9 +263,7 @@ void menu8()
     cout << "\n\tMasukkan nama menu yang akan dihapus: ";
     cin.ignore();
     getline(cin, input);
-    // Convert input to uppercase
-    for (auto &c : input)
-        c = tolower(c);
+    to_lowercase(input);
 
     if (menu.find(input) != menu.end())
     {
@@ -278,6 +274,9 @@ void menu8()
     {
         cout << "\tMenu tidak ditemukan." << endl;
     }
+    cout << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
     cout << endl;
 }
 
@@ -307,14 +306,17 @@ void menu9()
     SetConsoleTextAttribute(h, 7);
     cout << "\n"
          << endl;
+    cout << "-----------------------------------------------------------" << endl;
+    cout << "===========================================================" << endl;
+    cout << endl;
     system("pause");
     system("cls");
 }
 
 int main()
 {
-    welcome();
-    system("cls");
+    // welcome();
+    // system("cls");
     do
     {
         cout << "\n===========================================================" << endl;
@@ -338,7 +340,6 @@ int main()
         cin >> pil;
         cout << endl;
         cout << "-----------------------------------------------------------" << endl;
-        cout << "===========================================================" << endl;
 
         switch (pil)
         {
