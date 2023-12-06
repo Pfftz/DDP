@@ -95,7 +95,7 @@ void welcome()
                                                       MM                                                
                                                     .JMML.                                              
 )";
-    // fontnya Block
+    // fontnya NV Script
     SetConsoleTextAttribute(h, 4); // merah
     cout << endl
          << opening << "\n\n\n"
@@ -172,27 +172,50 @@ void menu1()
     cout << "+---------------------------------------------------------+" << endl;
 }
 
-void menu5()
+void menu3()
 {
-    cout << "\tMasukkan nama menu yang akan dihapus: ";
-    cin.ignore();
-    getline(cin, input);
-    // Convert input to uppercase
-    for (auto &c : input)
-        c = tolower(c);
-
-    if (menu.find(input) != menu.end())
+    cout << "\tStok bahan baku saat ini:" << endl;
+    for (const auto &bahan : bahan_baku_stok)
     {
-        menu.erase(input);
-        cout << "\tMenu '" << input << "' berhasil dihapus." << endl;
-    }
-    else
-    {
-        cout << "\tMenu tidak ditemukan." << endl;
+        cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
     }
 }
 
+void menu4()
+{
+    cout << "\tPesanan saat ini:" << endl;
+    for (const auto &item : pesanan)
+    {
+        cout << "\t" << item.first << " - " << item.second << " porsi" << endl;
+    }
+    cout << endl;
+}
+
+void menu5()
+{
+    cout << "\tTotal pendapatan saat ini: Rp." << total_harga << endl;
+    cout << endl;
+}
+
 void menu6()
+{
+    cout << "\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
+    cin >> input;
+    if (bahan_baku_stok.find(input) != bahan_baku_stok.end())
+    {
+        int newStock;
+        cout << "\tMasukkan jumlah stok baru: ";
+        cin >> newStock;
+        bahan_baku_stok[input] = newStock;
+        cout << "\tStok bahan baku '" << input << "' telah diupdate menjadi " << newStock << endl;
+    }
+    else
+    {
+        cout << "\tBahan baku tidak ditemukan." << endl;
+    }
+}
+
+void menu7()
 {
     cout << "\tMasukkan nama menu yang akan ditambahkan: ";
     cin.ignore();
@@ -234,20 +257,24 @@ void menu6()
     }
 }
 
-void menu7()
-{
-    cout << "\tPesanan saat ini:" << endl;
-    for (const auto &item : pesanan)
-    {
-        cout << "\t" << item.first << " - " << item.second << " porsi" << endl;
-    }
-    cout << endl;
-}
-
 void menu8()
 {
-    cout << "\tTotal pendapatan saat ini: Rp." << total_harga << endl;
-    cout << endl;
+    cout << "\tMasukkan nama menu yang akan dihapus: ";
+    cin.ignore();
+    getline(cin, input);
+    // Convert input to uppercase
+    for (auto &c : input)
+        c = tolower(c);
+
+    if (menu.find(input) != menu.end())
+    {
+        menu.erase(input);
+        cout << "\tMenu '" << input << "' berhasil dihapus." << endl;
+    }
+    else
+    {
+        cout << "\tMenu tidak ditemukan." << endl;
+    }
 }
 
 void menu9()
@@ -262,8 +289,11 @@ void menu9()
     }
     cout << "\n Credit: " << endl;
     cout << " 1. Abdulhadi Muntashir (3337230041)" << endl;
-    cout << " 2. Maulana Faizar Rasyadan (3337230072)" << endl;
-    cout << " 3. Usamah Abdul Aziz (3337230079)" << endl;
+    cout << " 2. Ezra Darrel Prasetya P (3337230069)" << endl;
+    cout << " 3. Maulana Faizar Rasyadan (3337230072)" << endl;
+    cout << " 4. Usamah Abdul Aziz (3337230079)" << endl;
+    cout << " 5. Muhammad Daffi Maulana (3337230080) " << endl;
+    cout << " 6. Dinda oktavia (3337230082)" << endl;
     cout << " ";
     for (int i = 0; i < 40; i++)
     {
@@ -289,11 +319,11 @@ int main()
         cout << "\t1. Pesan Menu\n";
         cout << "\t2. Lihat Daftar Menu\n";
         cout << "\t3. Cek Stok Bahan Baku\n";
-        cout << "\t4. Update Stok Bahan Baku\n";
-        cout << "\t5. Hapus Menu\n";
-        cout << "\t6. Tambah Menu\n";
-        cout << "\t7. Cek Pesanan\n";
-        cout << "\t8. Cek Total Pendapatan\n";
+        cout << "\t4. Cek Pesanan\n";
+        cout << "\t5. Cek Total Pendapatan\n";
+        cout << "\t6. Update Stok Bahan Baku\n";
+        cout << "\t7. Tambah Menu\n";
+        cout << "\t8. Hapus Menu\n";
         cout << "\t9. Credit\n";
         cout << "\t0. Keluar\n";
         cout << "-----------------------------------------------------------" << endl;
@@ -323,11 +353,7 @@ int main()
 
         case 3:
         {
-            cout << "\tStok bahan baku saat ini:" << endl;
-            for (const auto &bahan : bahan_baku_stok)
-            {
-                cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
-            }
+            menu3();
             system("pause");
             system("cls");
             cout << endl;
@@ -336,20 +362,7 @@ int main()
 
         case 4:
         {
-            cout << "\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
-            cin >> input;
-            if (bahan_baku_stok.find(input) != bahan_baku_stok.end())
-            {
-                int newStock;
-                cout << "\tMasukkan jumlah stok baru: ";
-                cin >> newStock;
-                bahan_baku_stok[input] = newStock;
-                cout << "\tStok bahan baku '" << input << "' telah diupdate menjadi " << newStock << endl;
-            }
-            else
-            {
-                cout << "\tBahan baku tidak ditemukan." << endl;
-            }
+            menu4();
             system("pause");
             system("cls");
             cout << endl;
