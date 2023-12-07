@@ -216,6 +216,7 @@ void menu6()
 {
     std::cout << "\n\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
     std::cin >> input;
+    to_lowercase(input);
     if (bahan_baku_stok.find(input) != bahan_baku_stok.end())
     {
         int newStock;
