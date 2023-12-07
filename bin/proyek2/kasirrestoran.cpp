@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <tuple>
 #include <cctype>
+#include <vector>
 
 using namespace std;
 
@@ -24,9 +25,9 @@ map<string, tuple<double, map<string, int>>> menu{
     {"bubur", {15000, {{"Nasi", 1}, {"Ayam", 1}, {"Sayur", 1}}}},
 };
 
-map<string, int> pesanan;
+vector<map<string, int>> pesanan;
 string input;
-long long int total_harga;
+vector<long long int> total_harga;
 int pil;
 char kode;
 long long int diskon = 0;
@@ -34,18 +35,18 @@ HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void tampilkan_daftar_menu()
 {
-    cout << "\n\t--- Daftar Menu ---" << endl;
+    std::cout << "\n\t--- Daftar Menu ---" << endl;
     for (const auto &item : menu)
     {
         const string &nama_menu = item.first;
         const double harga_menu = std::get<0>(item.second);
 
-        cout << "\t" << nama_menu << " - Rp" << harga_menu << endl;
+        std::cout << "\t" << nama_menu << " - Rp" << harga_menu << endl;
     }
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 double get_total(const map<string, int> &pesanan)
@@ -84,156 +85,175 @@ void kurangi_stok_bahan_baku(const map<string, int> &pesanan)
             }
         }
     }
-    cout << endl;
+    std::cout << endl;
 }
 
 void menu1()
 {
     tampilkan_daftar_menu();
     char pesan_lagi;
+    map<string, int> pesanan_saat_ini;
+    long long int total_harga_saat_ini = 0; // Declare total_harga_saat_ini here
+
     do
     {
-        cout << "+---------------------------------------------------------+" << endl;
-        cout << "\tPilih menu yang ingin dipesan: ";
-        cin.ignore();
-        getline(cin, input);
+        std::cout << "+---------------------------------------------------------+" << endl;
+        std::cout << "\tPilih menu yang ingin dipesan: ";
+        std::cin.ignore();
+        getline(std::cin, input);
         // Pass input to the to_lowercase function
         to_lowercase(input);
 
         if (menu.find(input) != menu.end())
         {
             int quantity;
-            cout << "\tMasukkan jumlah porsi: ";
-            cin >> quantity;
+            std::cout << "\tMasukkan jumlah porsi: ";
+            std::cin >> quantity;
 
-            pesanan[input] += quantity;
+            pesanan_saat_ini[input] += quantity;
 
-            cout << "\tApakah Anda ingin memesan menu lagi? (y/n): ";
-            cin >> pesan_lagi;
-            cout << endl;
+            std::cout << "\tApakah Anda ingin memesan menu lagi? (y/n): ";
+            std::cin >> pesan_lagi;
+            std::cout << endl;
         }
         else
         {
-            cout << "\tMenu tidak tersedia. Silakan pilih menu lain.\n";
+            std::cout << "\tMenu tidak tersedia. Silakan pilih menu lain.\n";
         }
+
+        total_harga_saat_ini += get_total({{input, pesanan_saat_ini[input]}}); // Use += instead of =
+
+        std::cout << "\tTotal belanja untuk pesanan ini: Rp" << total_harga_saat_ini << endl;
+
     } while (pesan_lagi == 'y' || pesan_lagi == 'Y');
 
-    total_harga = get_total(pesanan);
-
-    cout << "\tMasukan kode diskon: ";
-    cin >> kode;
+    pesanan.push_back(pesanan_saat_ini);
+    total_harga.push_back(total_harga_saat_ini);
+    
+    std::cout << "\tMasukan kode diskon: ";
+    std::cin >> kode;
     if (kode == 'A' || kode == 'a')
     {
-        diskon += (total_harga * 0.1);
+        diskon += (total_harga_saat_ini * 0.1);
     }
     else if (kode == 'B' || kode == 'b')
     {
-        diskon += (total_harga * 0.2);
+        diskon += (total_harga_saat_ini * 0.2);
     }
     else if (kode == 'C' || kode == 'c')
     {
-        diskon += (total_harga * 0.3);
+        diskon += (total_harga_saat_ini * 0.3);
     }
-    long long int harga_bayar = total_harga - diskon;
+    long long int harga_bayar = total_harga_saat_ini - diskon;
 
-    cout << "\tTotal belanja: Rp" << total_harga << endl;
-    cout << "\tTotal diskon: Rp" << diskon << endl;
-    cout << "\tTotal yang harus dibayarkan: Rp" << harga_bayar << endl;
-    cout << endl;
+    std::cout << "\tTotal belanja: Rp" << total_harga_saat_ini << endl;
+    std::cout << "\tTotal diskon: Rp" << diskon << endl;
+    std::cout << "\tTotal yang harus dibayarkan: Rp" << harga_bayar << endl;
+    std::cout << endl;
 
     long long int uang_bayar;
-    cout << "\tMasukan jumlah uang yang dibayarkan: Rp";
-    cin >> uang_bayar;
+    std::cout << "\tMasukan jumlah uang yang dibayarkan: Rp";
+    std::cin >> uang_bayar;
     long long int kembalian = uang_bayar - harga_bayar;
-    cout << "\tKembalianmu adalah: Rp" << kembalian << endl;
+    std::cout << "\tKembalianmu adalah: Rp" << kembalian << endl;
 
-    kurangi_stok_bahan_baku(pesanan);
+    kurangi_stok_bahan_baku(pesanan.back());
 
-    cout << "\tPesanan berhasil diproses!" << endl;
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << "\tPesanan berhasil diproses!" << endl;
+    std::cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 void menu3()
 {
-    cout << "\n\tStok bahan baku saat ini:" << endl;
+    std::cout << "\n\tStok bahan baku saat ini:" << endl;
     for (const auto &bahan : bahan_baku_stok)
     {
-        cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
+        std::cout << "\t" << bahan.first << " - Stok: " << bahan.second << endl;
     }
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 void menu4()
 {
-    cout << "\n\tPesanan saat ini:" << endl;
-    for (const auto &item : pesanan)
+    std::cout << "\n\tPesanan saat ini:" << std::endl;
+    for (std::vector<std::map<std::string, int>>::size_type i = 0; i < pesanan.size(); i++)
     {
-        cout << "\t" << item.first << " - " << item.second << " porsi" << endl;
+        std::cout << "\tPesanan - " << i + 1 << std::endl;
+        for (const auto &item : pesanan[i])
+        {
+            std::cout << "\t" << item.first << " - " << item.second << " porsi" << std::endl;
+        }
+        std::cout << "\n\tDengan Total harga: Rp" << total_harga[i] << std::endl;
     }
-    cout << "\n\tDengan Total harga: Rp" << total_harga << endl;
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << std::endl;
+    std::cout << "-----------------------------------------------------------" << std::endl;
+    std::cout << "===========================================================" << std::endl;
+    std::cout << std::endl;
 }
 
 void menu5()
 {
-    cout << "\n\tTotal pendapatan saat ini: Rp" << total_harga << endl;
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    long long int total_pendapatan = 0;
+    for (const auto &harga : total_harga)
+    {
+        total_pendapatan += harga;
+    }
+
+    std::cout << "\n\tTotal pendapatan saat ini: Rp" << total_pendapatan << endl;
+    std::cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 void menu6()
 {
-    cout << "\n\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
-    cin >> input;
+    std::cout << "\n\tMasukkan nama bahan baku yang akan diupdate stoknya: ";
+    std::cin >> input;
     if (bahan_baku_stok.find(input) != bahan_baku_stok.end())
     {
         int newStock;
-        cout << "\tMasukkan jumlah stok baru: ";
-        cin >> newStock;
+        std::cout << "\tMasukkan jumlah stok baru: ";
+        std::cin >> newStock;
         bahan_baku_stok[input] = newStock;
-        cout << "\tStok bahan baku '" << input << "' telah diupdate menjadi " << newStock << endl;
+        std::cout << "\tStok bahan baku '" << input << "' telah diupdate menjadi " << newStock << endl;
     }
     else
     {
-        cout << "\tBahan baku tidak ditemukan." << endl;
+        std::cout << "\tBahan baku tidak ditemukan." << endl;
     }
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 void menu7()
 {
-    cout << "\n\tMasukkan nama menu yang akan ditambahkan: ";
-    cin.ignore();
-    getline(cin, input);
+    std::cout << "\n\tMasukkan nama menu yang akan ditambahkan: ";
+    std::cin.ignore();
+    getline(std::cin, input);
 
     if (menu.find(input) != menu.end())
     {
-        cout << "\tMenu '" << input << "' sudah ada." << endl;
+        std::cout << "\tMenu '" << input << "' sudah ada." << endl;
     }
     else
     {
         double harga;
-        cout << "\tMasukkan harga menu: Rp";
-        cin >> harga;
-        cin.ignore();
+        std::cout << "\tMasukkan harga menu: Rp";
+        std::cin >> harga;
+        std::cin.ignore();
 
         int jumlah_bahan;
-        cout << "\tBerapa banyak bahan baku yang dibutuhkan: ";
-        cin >> jumlah_bahan;
-        cin.ignore();
+        std::cout << "\tBerapa banyak bahan baku yang dibutuhkan: ";
+        std::cin >> jumlah_bahan;
+        std::cin.ignore();
 
         map<string, int> bahan_menu;
         for (int i = 0; i < jumlah_bahan; i++)
@@ -241,11 +261,11 @@ void menu7()
             string nama_bahan;
             int jumlah_bahan_dibutuhkan;
 
-            cout << "\tMasukkan nama bahan baku: ";
-            getline(cin, nama_bahan);
-            cout << "\tMasukkan jumlah bahan   : ";
-            cin >> jumlah_bahan_dibutuhkan;
-            cin.ignore();
+            std::cout << "\tMasukkan nama bahan baku: ";
+            getline(std::cin, nama_bahan);
+            std::cout << "\tMasukkan jumlah bahan   : ";
+            std::cin >> jumlah_bahan_dibutuhkan;
+            std::cin.ignore();
 
             bahan_menu[nama_bahan] = jumlah_bahan_dibutuhkan;
 
@@ -254,73 +274,73 @@ void menu7()
             {
                 // If the ingredient doesn't exist, add it to the map and initialize its stock to a default value
                 int stok_bahan;
-                cout << "\tMasukkan stok bahan baku '" << nama_bahan << "': ";
-                cin >> stok_bahan;
-                cin.ignore();
+                std::cout << "\tMasukkan stok bahan baku '" << nama_bahan << "': ";
+                std::cin >> stok_bahan;
+                std::cin.ignore();
                 bahan_baku_stok[nama_bahan] = stok_bahan;
             }
         }
 
         menu[input] = {harga, bahan_menu};
-        cout << "\tMenu '" << input << "' berhasil ditambahkan." << endl;
+        std::cout << "\tMenu '" << input << "' berhasil ditambahkan." << endl;
     }
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 void menu8()
 {
-    cout << "\n\tMasukkan nama menu yang akan dihapus: ";
-    cin.ignore();
-    getline(cin, input);
+    std::cout << "\n\tMasukkan nama menu yang akan dihapus: ";
+    std::cin.ignore();
+    getline(std::cin, input);
     to_lowercase(input);
 
     if (menu.find(input) != menu.end())
     {
         menu.erase(input);
-        cout << "\tMenu '" << input << "' berhasil dihapus." << endl;
+        std::cout << "\tMenu '" << input << "' berhasil dihapus." << endl;
     }
     else
     {
-        cout << "\tMenu tidak ditemukan." << endl;
+        std::cout << "\tMenu tidak ditemukan." << endl;
     }
-    cout << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
 }
 
 void menu9()
 {
     SetConsoleTextAttribute(h, 5);
-    cout << "\n\n";
-    cout << " ";
+    std::cout << "\n\n";
+    std::cout << " ";
     for (int i = 0; i < 40; i++)
     {
         Sleep(100);
-        cout << "-";
+        std::cout << "-";
     }
-    cout << "\n Credit: " << endl;
-    cout << " 1. Abdulhadi Muntashir (3337230041)" << endl;
-    cout << " 2. Ezra Darrel Prasetya P (3337230069)" << endl;
-    cout << " 3. Maulana Faizar Rasyadan (3337230072)" << endl;
-    cout << " 4. Usamah Abdul Aziz (3337230079)" << endl;
-    cout << " 5. Muhammad Daffi Maulana (3337230080) " << endl;
-    cout << " 6. Dinda oktavia (3337230082)" << endl;
-    cout << " ";
+    std::cout << "\n Credit: " << endl;
+    std::cout << " 1. Abdulhadi Muntashir (3337230041)" << endl;
+    std::cout << " 2. Ezra Darrel Prasetya P (3337230069)" << endl;
+    std::cout << " 3. Maulana Faizar Rasyadan (3337230072)" << endl;
+    std::cout << " 4. Usamah Abdul Aziz (3337230079)" << endl;
+    std::cout << " 5. Muhammad Daffi Maulana (3337230080) " << endl;
+    std::cout << " 6. Dinda oktavia (3337230082)" << endl;
+    std::cout << " ";
     for (int i = 0; i < 40; i++)
     {
         Sleep(100);
-        cout << "-";
+        std::cout << "-";
     }
     SetConsoleTextAttribute(h, 7);
-    cout << "\n"
+    std::cout << "\n"
          << endl;
-    cout << "-----------------------------------------------------------" << endl;
-    cout << "===========================================================" << endl;
-    cout << endl;
+    std::cout << "-----------------------------------------------------------" << endl;
+    std::cout << "===========================================================" << endl;
+    std::cout << endl;
     system("pause");
     system("cls");
 }
@@ -331,27 +351,27 @@ int main()
     // system("cls");
     do
     {
-        cout << "\n===========================================================" << endl;
-        cout << "-----------------------------------------------------------" << endl;
-        cout << "####----        Kasir Restoran Kelompok 5 DDP      ----####" << endl;
-        cout << "\n\tKasir restoran" << endl;
-        cout << "\t1. Pesan Menu\n";
-        cout << "\t2. Lihat Daftar Menu\n";
-        cout << "\t3. Cek Stok Bahan Baku\n";
-        cout << "\t4. Cek Pesanan\n";
-        cout << "\t5. Cek Total Pendapatan\n";
-        cout << "\t6. Update Stok Bahan Baku\n";
-        cout << "\t7. Tambah Menu\n";
-        cout << "\t8. Hapus Menu\n";
-        cout << "\t9. Credit\n";
-        cout << "\t0. Keluar\n\n";
-        cout << "===========================================================" << endl;
-        cout << "-----------------------------------------------------------" << endl;
-        cout << endl;
-        cout << "\tMasukkan pilihan: ";
-        cin >> pil;
-        cout << endl;
-        cout << "-----------------------------------------------------------" << endl;
+        std::cout << "\n===========================================================" << endl;
+        std::cout << "-----------------------------------------------------------" << endl;
+        std::cout << "####----        Kasir Restoran Kelompok 5 DDP      ----####" << endl;
+        std::cout << "\n\tKasir restoran" << endl;
+        std::cout << "\t1. Pesan Menu\n";
+        std::cout << "\t2. Lihat Daftar Menu\n";
+        std::cout << "\t3. Cek Stok Bahan Baku\n";
+        std::cout << "\t4. Cek Pesanan\n";
+        std::cout << "\t5. Cek Total Pendapatan\n";
+        std::cout << "\t6. Update Stok Bahan Baku\n";
+        std::cout << "\t7. Tambah Menu\n";
+        std::cout << "\t8. Hapus Menu\n";
+        std::cout << "\t9. Credit\n";
+        std::cout << "\t0. Keluar\n\n";
+        std::cout << "===========================================================" << endl;
+        std::cout << "-----------------------------------------------------------" << endl;
+        std::cout << endl;
+        std::cout << "\tMasukkan pilihan: ";
+        std::cin >> pil;
+        std::cout << endl;
+        std::cout << "-----------------------------------------------------------" << endl;
 
         switch (pil)
         {
@@ -360,7 +380,7 @@ int main()
             menu1();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
 
@@ -369,7 +389,7 @@ int main()
             tampilkan_daftar_menu();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
 
@@ -378,7 +398,7 @@ int main()
             menu3();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
 
@@ -387,7 +407,7 @@ int main()
             menu4();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         case 5:
@@ -395,7 +415,7 @@ int main()
             menu5();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         case 6:
@@ -403,7 +423,7 @@ int main()
             menu6();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         case 7:
@@ -411,7 +431,7 @@ int main()
             menu7();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         case 8:
@@ -419,7 +439,7 @@ int main()
             menu8();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         case 9:
@@ -427,22 +447,22 @@ int main()
             menu9();
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         case 0:
         {
-            cout << "\tTerima kasih telah menggunakan aplikasi ini!" << endl;
-            cout << "\tSampai jumpa kembali!" << endl;
-            cout << endl;
+            std::cout << "\tTerima kasih telah menggunakan aplikasi ini!" << endl;
+            std::cout << "\tSampai jumpa kembali!" << endl;
+            std::cout << endl;
             break;
         }
         default:
         {
-            cout << "\tPilihan tidak tersedia." << endl;
+            std::cout << "\tPilihan tidak tersedia." << endl;
             system("pause");
             system("cls");
-            cout << endl;
+            std::cout << endl;
             break;
         }
         }
