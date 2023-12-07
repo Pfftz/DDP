@@ -129,7 +129,7 @@ void menu1()
 
     pesanan.push_back(pesanan_saat_ini);
     total_harga.push_back(total_harga_saat_ini);
-    
+
     std::cout << "\tMasukan kode diskon: ";
     std::cin >> kode;
     if (kode == 'A' || kode == 'a')
@@ -315,7 +315,7 @@ void menu8()
 void menu9()
 {
     SetConsoleTextAttribute(h, 5);
-    std::cout << "\n\n";
+    std::cout << "\n";
     std::cout << " ";
     for (int i = 0; i < 40; i++)
     {
@@ -337,7 +337,7 @@ void menu9()
     }
     SetConsoleTextAttribute(h, 7);
     std::cout << "\n"
-         << endl;
+              << endl;
     std::cout << "-----------------------------------------------------------" << endl;
     std::cout << "===========================================================" << endl;
     std::cout << endl;
@@ -382,25 +382,27 @@ void welcome()
     untuk menyertakan karakter khusus dalam teks tanpa harus meng-escape-nya (menambahkan karakter khusus seperti backslash '\').
     */
     string opening = R"(
-                                                                                                        
-                                                                ,,                                      
-`7MMF'  `7MMF'                           `7MM"""YMM             db                                      
-  MM      MM                               MM    `7                                                     
-  MM      MM  .gP"Ya `7M'   `MF' ,6"Yb.    MM   d   `7MMpdMAo.`7MM  ,p6"bo `7MM  `7MM  `7Mb,od8 .gP"Ya  
-  MMmmmmmmMM ,M'   Yb  `VA ,V'  8)   MM    MMmmMM     MM   `Wb  MM 6M'  OO   MM    MM    MM' "',M'   Yb 
-  MM      MM 8M""""""    XMX     ,pm9MM    MM   Y  ,  MM    M8  MM 8M        MM    MM    MM    8M"""""" 
-  MM      MM YM.    ,  ,V' VA.  8M   MM    MM     ,M  MM   ,AP  MM YM.    ,  MM    MM    MM    YM.    , 
-.JMML.  .JMML.`Mbmmd'.AM.   .MA.`Moo9^Yo..JMMmmmmMMM  MMbmmd' .JMML.YMbmd'   `Mbod"YML..JMML.   `Mbmmd' 
-                                                      MM                                                
-                                                    .JMML.                                              
+                                                                                                                
+                                                                        ,,                                      
+        `7MMF'  `7MMF'                           `7MM"""YMM             db                                      
+          MM      MM                               MM    `7                                                     
+          MM      MM  .gP"Ya `7M'   `MF' ,6"Yb.    MM   d   `7MMpdMAo.`7MM  ,p6"bo `7MM  `7MM  `7Mb,od8 .gP"Ya  
+          MMmmmmmmMM ,M'   Yb  `VA ,V'  8)   MM    MMmmMM     MM   `Wb  MM 6M'  OO   MM    MM    MM' "',M'   Yb 
+          MM      MM 8M""""""    XMX     ,pm9MM    MM   Y  ,  MM    M8  MM 8M        MM    MM    MM    8M"""""" 
+          MM      MM YM.    ,  ,V' VA.  8M   MM    MM     ,M  MM   ,AP  MM YM.    ,  MM    MM    MM    YM.    , 
+        .JMML.  .JMML.`Mbmmd'.AM.   .MA.`Moo9^Yo..JMMmmmmMMM  MMbmmd' .JMML.YMbmd'   `Mbod"YML..JMML.   `Mbmmd' 
+                                                              MM                                                
+                                                            .JMML.                                              
 )";
     // fontnya NV Script
     SetConsoleTextAttribute(h, 13); // merah
     cout << endl
-         << opening << "\n\n\n"
+         << opening << "\n"
          << endl;
     SetConsoleTextAttribute(h, 7); // putih
-    cout << " Version: alpha\n\n\n\n eres el mejor programador del mundo - Bang Messi\n\n\n\n";
+    cout << "                    Welcome to HexaEpicure! Experience culinary magic with the essence of six. \n\n\n";
+    cout << "  \"Embrace the harmony of HexaEpicure, where the essence of six transforms every bite into a symphony of perfection.\"\n\n\n"
+         << endl;
     system("pause"); // command line for stopping the program
     loading();
 }
@@ -514,6 +516,19 @@ int main()
         {
             std::cout << "\tTerima kasih telah menggunakan aplikasi ini!" << endl;
             std::cout << "\tSampai jumpa kembali!" << endl;
+            std::cout << endl;
+            SetConsoleTextAttribute(h, 5);
+            cout << "          ______    __          __        ______    " << endl;
+            cout << "         /\" _  \"\\  |\" \\        /\"\"\\      /    \" \\   " << endl;
+            cout << "        (: ( \\___) ||  |      /    \\    // ____  \\  " << endl;
+            cout << "         \\/ \\      |:  |     /' /\\  \\  /  /    ) :) " << endl;
+            cout << "         //  \\ _   |.  |    //  __'  \\(: (____/ //  " << endl;
+            cout << "        (:   _) \\  /\\  |\\  /   /  \\\\  \\        /   " << endl;
+            cout << "         \\_______)(__\\_|_)(___/    \\___)\"_____/    " << endl;
+            cout << "                                                     " << endl;
+            std::cout << endl;
+            std::cout << "-----------------------------------------------------------" << endl;
+            std::cout << "===========================================================" << endl;
             std::cout << endl;
             break;
         }
