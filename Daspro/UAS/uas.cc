@@ -53,6 +53,7 @@ int main()
 {
     welcome();
     system("cls"); // command line for clearing the screen
+    cout << "\n\n Program Palindrom Checker" << endl;
     cout << "+--------------------------------------------------+" << endl;
     cout << " Masukkan Kalimat: ";
     getline(cin, kalimat);
@@ -84,14 +85,14 @@ int main()
         cout << "\n Kata tersebut bukan palindrom" << endl;
     }
     cout << "+--------------------------------------------------+" << endl;
-    cout << "          ______    __          __        ______    " << endl;
-    cout << "         /\" _  \"\\  |\" \\        /\"\"\\      /    \" \\   " << endl;
-    cout << "        (: ( \\___) ||  |      /    \\    // ____  \\  " << endl;
-    cout << "         \\/ \\      |:  |     /' /\\  \\  /  /    ) :) " << endl;
-    cout << "         //  \\ _   |.  |    //  __'  \\(: (____/ //  " << endl;
-    cout << "        (:   _) \\  /\\  |\\  /   /  \\\\  \\        /   " << endl;
-    cout << "         \\_______)(__\\_|_)(___/    \\___)\"_____/    " << endl;
-    cout << "                                                     " << endl;
+    cout << "       ______    __          __        ______    " << endl;
+    cout << "      /\" _  \"\\  |\" \\        /\"\"\\      /    \" \\   " << endl;
+    cout << "     (: ( \\___) ||  |      /    \\    // ____  \\  " << endl;
+    cout << "      \\/ \\      |:  |     /' /\\  \\  /  /    ) :) " << endl;
+    cout << "      //  \\ _   |.  |    //  __'  \\(: (____/ //  " << endl;
+    cout << "     (:   _) \\  /\\  |\\  /   /  \\\\  \\        /   " << endl;
+    cout << "      \\_______)(__\\_|_)(___/    \\___)\"_____/    " << endl;
+    cout << "                                                  " << endl;
 
     return 0;
 }
